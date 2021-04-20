@@ -22,7 +22,7 @@ private:
             int iColOffset = (m.iEndCol - m.iStartCol > 0) ? 1 : -1;
             for (int iCheckCol = m.iStartCol + iColOffset; iCheckCol != m.iEndCol; iCheckCol = iCheckCol + iColOffset)
             {
-                if (qpaaBoard[m.iStartRow][iCheckCol] != 0)
+                if (qpaaBoard[m.iStartRow][iCheckCol] != nullptr)
                 {
                     return false;
                 }
@@ -35,7 +35,7 @@ private:
             int iRowOffset = (m.iEndRow - m.iStartRow > 0) ? 1 : -1;
             for (int iCheckRow = m.iStartRow + iRowOffset; iCheckRow != m.iEndRow; iCheckRow = iCheckRow + iRowOffset)
             {
-                if (qpaaBoard[iCheckRow][m.iStartCol] != 0)
+                if (qpaaBoard[iCheckRow][m.iStartCol] != nullptr)
                 {
                     return false;
                 }
@@ -51,6 +51,8 @@ public:
 
     ~P_Rook()
     {}
+
+    bool canCastle = true;
 };
 
 

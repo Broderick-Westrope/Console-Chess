@@ -43,7 +43,7 @@ bool HumanPlayer::GetMove(Board &board)
             if ((qpCurrPiece != nullptr) && (qpCurrPiece->GetColor() == type))
             {
                 // Check that the destination is a valid destination
-                if (qpCurrPiece->IsLegalMove(m, board.mqpaaBoard))
+                if (qpCurrPiece->IsLegalMove(m, Board()))
                 {
                     system("CLS");
                     board.DoTheMove(m, type);

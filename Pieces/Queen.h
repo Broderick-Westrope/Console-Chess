@@ -3,6 +3,7 @@
 //  Date: 20/04/21
 //
 #include "Piece.h"
+#include "../Board.h"
 
 #ifndef CONSOLE_CHESS_QUEEN_H
 #define CONSOLE_CHESS_QUEEN_H
@@ -15,7 +16,7 @@ private:
         return 'Q';
     }
 
-    bool AreSquaresLegal(Move m, Piece *qpaaBoard[8][8])
+    bool AreSquaresLegal(Move m, Board *board)
     {
         if (m.iStartRow == m.iEndRow)
         {
@@ -23,7 +24,7 @@ private:
             int iColOffset = (m.iEndCol - m.iStartCol > 0) ? 1 : -1;
             for (int iCheckCol = m.iStartCol + iColOffset; iCheckCol != m.iEndCol; iCheckCol = iCheckCol + iColOffset)
             {
-                if (qpaaBoard[m.iStartRow][iCheckCol] != 0)
+                if (board[m.iStartRow][iCheckCol] != 0)
                 {
                     return false;
                 }
@@ -36,7 +37,7 @@ private:
             int iRowOffset = (m.iEndRow - m.iStartRow > 0) ? 1 : -1;
             for (int iCheckRow = m.iStartRow + iRowOffset; iCheckRow != m.iEndRow; iCheckRow = iCheckRow + iRowOffset)
             {
-                if (qpaaBoard[iCheckRow][m.iStartCol] != 0)
+                if (board[iCheckRow][m.iStartCol] != 0)
                 {
                     return false;
                 }
@@ -54,7 +55,7 @@ private:
                  iCheckRow != m.iEndRow;
                  iCheckRow = iCheckRow + iRowOffset, iCheckCol = iCheckCol + iColOffset)
             {
-                if (qpaaBoard[iCheckRow][iCheckCol] != nullptr)
+                if (board[iCheckRow][iCheckCol] != nullptr)
                 {
                     return false;
                 }

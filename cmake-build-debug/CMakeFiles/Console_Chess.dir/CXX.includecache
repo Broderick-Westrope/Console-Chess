@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
+Pieces_I.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces_I.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Chess.h
 
@@ -29,10 +31,14 @@ Piece.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Piece.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Piece.h
+../Board.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Queen.h
 Piece.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Piece.h
+../Board.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Rook.h
 Piece.h
@@ -69,10 +75,10 @@ iostream
 -
 Move.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Move.h
-Pieces_I.h
-C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces_I.h
 Board.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
+Pieces_I.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces_I.h
 Players_I.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players_I.h
 Chess.h

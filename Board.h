@@ -5,6 +5,8 @@
 #ifndef CONSOLE_CHESS_BOARD_H
 #define CONSOLE_CHESS_BOARD_H
 
+#include "Pieces_I.h"
+
 class Board
 {
 public:
@@ -174,7 +176,7 @@ public:
                     if (mqpaaBoard[iRow][iCol]->GetColor() != type)
                     {
                         Move m(iRow, iCol, iKingRow, iKingCol);
-                        if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, mqpaaBoard))
+                        if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, Board()))
                         {
                             return true;
                         }
@@ -211,7 +213,7 @@ public:
                             for (int iMoveCol = 0; iMoveCol < 8; ++iMoveCol)
                             {
                                 Move m(iRow, iCol, iMoveRow, iMoveCol);
-                                if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, mqpaaBoard))
+                                if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, Board()))
                                 {
                                     // Make move and check whether king is in check
                                     Piece *qpTemp = mqpaaBoard[iMoveRow][iMoveCol];

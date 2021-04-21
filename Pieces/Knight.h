@@ -2,10 +2,11 @@
 //  Author: Broderick Westrope
 //  Date: 20/04/21
 //
-#include "Piece.h"
 
 #ifndef CONSOLE_CHESS_KNIGHT_H
 #define CONSOLE_CHESS_KNIGHT_H
+
+#include "Piece.h"
 
 class P_Knight : public Piece
 {
@@ -15,7 +16,7 @@ private:
         return 'N';
     }
 
-    bool AreSquaresLegal(Move m, Piece *qpaaBoard[8][8])
+    bool AreSquaresLegal(Move m, Board *board)
     {
         if ((m.iStartCol == m.iEndCol + 1) || (m.iStartCol == m.iEndCol - 1))
         {

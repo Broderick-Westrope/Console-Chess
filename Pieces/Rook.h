@@ -1,11 +1,10 @@
 //
 // Created by ascle on 20/04/2021.
 //
+#include "Piece.h"
 
 #ifndef CONSOLE_CHESS_ROOK_H
 #define CONSOLE_CHESS_ROOK_H
-
-#include "Piece.h"
 
 class P_Rook : public Piece
 {
@@ -15,7 +14,7 @@ private:
         return 'R';
     }
 
-    bool AreSquaresLegal(Move m, Board *board)
+    bool AreSquaresLegal(Move m, Piece *qpaaBoard[8][8])
     {
         if (m.iStartRow == m.iEndRow)
         {
@@ -23,15 +22,7 @@ private:
             int iColOffset = (m.iEndCol - m.iStartCol > 0) ? 1 : -1;
             for (int iCheckCol = m.iStartCol + iColOffset; iCheckCol != m.iEndCol; iCheckCol = iCheckCol + iColOffset)
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                if (board->mqpaaBoard[m.iStartRow][iCheckCol] != nullptr)
-=======
-                if (qpaaBoard[m.iStartRow][iCheckCol] != 0)
->>>>>>> parent of 17e1082 (En Passant)
-=======
-                if (qpaaBoard[m.iStartRow][iCheckCol] != 0)
->>>>>>> parent of 17e1082 (En Passant)
+                if (qpaaBoard[m.iStartRow][iCheckCol] != nullptr)
                 {
                     return false;
                 }
@@ -44,15 +35,7 @@ private:
             int iRowOffset = (m.iEndRow - m.iStartRow > 0) ? 1 : -1;
             for (int iCheckRow = m.iStartRow + iRowOffset; iCheckRow != m.iEndRow; iCheckRow = iCheckRow + iRowOffset)
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                if (board->mqpaaBoard[iCheckRow][m.iStartCol] != nullptr)
-=======
-                if (qpaaBoard[iCheckRow][m.iStartCol] != 0)
->>>>>>> parent of 17e1082 (En Passant)
-=======
-                if (qpaaBoard[iCheckRow][m.iStartCol] != 0)
->>>>>>> parent of 17e1082 (En Passant)
+                if (qpaaBoard[iCheckRow][m.iStartCol] != nullptr)
                 {
                     return false;
                 }
@@ -68,6 +51,8 @@ public:
 
     ~P_Rook()
     {}
+
+    bool canCastle = true;
 };
 
 

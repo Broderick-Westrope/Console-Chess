@@ -5,8 +5,8 @@
 
 #include <iostream>
 #include "Move.h"
-#include "Board.h"
 #include "Pieces_I.h"
+#include "Board.h"
 #include "Players_I.h"
 #include "Chess.h"
 

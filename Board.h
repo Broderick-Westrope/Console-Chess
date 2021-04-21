@@ -5,8 +5,6 @@
 #ifndef CONSOLE_CHESS_BOARD_H
 #define CONSOLE_CHESS_BOARD_H
 
-#include "Pieces_I.h"
-
 class Board
 {
 public:
@@ -71,11 +69,11 @@ public:
             // Print side border with numbering
             if (iRow % 3 == 1)
             {
-                cout << '-' << (char) ('1' + 7 - iSquareRow) << '-';
+                cout << "   -" << (char) ('1' + 7 - iSquareRow) << '-';
             }
             else
             {
-                cout << "---";
+                cout << "   ---";
             }
             // Print the chess board
             for (int iCol = 0; iCol < 8 * kiSquareWidth; ++iCol)
@@ -116,7 +114,7 @@ public:
         {
             if (iRow % kiSquareHeight == 1)
             {
-                cout << "-----";
+                cout << "   -----";
                 for (int iCol = 0; iCol < 8 * kiSquareWidth; ++iCol)
                 {
                     int iSquareCol = iCol / kiSquareWidth;
@@ -133,6 +131,7 @@ public:
             }
             else
             {
+                cout << "   ";
                 for (int iCol = 1; iCol < 9 * kiSquareWidth; ++iCol)
                 {
                     cout << '-';
@@ -140,6 +139,7 @@ public:
                 cout << endl;
             }
         }
+        cout << endl;
     }
 
     bool IsInCheck(char type)
@@ -174,7 +174,7 @@ public:
                     if (mqpaaBoard[iRow][iCol]->GetColor() != type)
                     {
                         Move m(iRow, iCol, iKingRow, iKingCol);
-                        if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, Board()))
+                        if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, mqpaaBoard))
                         {
                             return true;
                         }
@@ -211,7 +211,7 @@ public:
                             for (int iMoveCol = 0; iMoveCol < 8; ++iMoveCol)
                             {
                                 Move m(iRow, iCol, iMoveRow, iMoveCol);
-                                if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, Board()))
+                                if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, mqpaaBoard))
                                 {
                                     // Make move and check whether king is in check
                                     Piece *qpTemp = mqpaaBoard[iMoveRow][iMoveCol];
@@ -259,8 +259,61 @@ public:
         //Check for pawn promotion
         if (CheckPromotion(m))
             PawnPromotion(m, type);
+        else if (EnPassant(m, type))
+            std::cout << "You did an En Passant move. Well Done!" << std::endl;
+
+        UpdateCastlingBools(m);
 
         return notCheck;
+    }
+
+    void UpdateCastlingBools(Move m)
+    {
+        if (mqpaaBoard[m.iEndRow][m.iEndCol]->GetPiece() == 'R')
+        {
+            std::cout << "Rook at " << m.iEndRow << m.iEndCol << " can no longer castle" << std::endl;
+            static_cast<P_Rook *>(mqpaaBoard[m.iEndRow][m.iEndCol])->canCastle = false;
+        }
+        else if (mqpaaBoard[m.iEndRow][m.iEndCol]->GetPiece() == 'K')
+        {
+            std::cout << "King at " << m.iEndRow << m.iEndCol << " can no longer castle" << std::endl;
+            static_cast<P_King *>(mqpaaBoard[m.iEndRow][m.iEndCol])->canCastle = false;
+        }
+    }
+
+    bool EnPassant(Move m, char type)
+    {
+        if ((type == 'W' && m.iEndRow == m.iStartRow + 2))
+        {
+            if (m.iEndCol - 1 >= 0 && mqpaaBoard[m.iEndRow][m.iEndCol - 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol - 1]->GetColor() == 'B')
+            {
+                delete mqpaaBoard[m.iEndRow][m.iEndCol - 1];
+                mqpaaBoard[m.iEndRow][m.iEndCol - 1] = nullptr;
+                return true;
+            }
+            else if (m.iEndCol + 1 <= 7 && mqpaaBoard[m.iEndRow][m.iEndCol + 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol + 1]->GetColor() == 'B')
+            {
+                delete mqpaaBoard[m.iEndRow][m.iEndCol + 1];
+                mqpaaBoard[m.iEndRow][m.iEndCol + 1] = nullptr;
+                return true;
+            }
+        }
+        else if (type == 'B' && m.iEndRow == m.iStartRow - 2)
+        {
+            if (m.iEndCol - 1 >= 0 && mqpaaBoard[m.iEndRow][m.iEndCol - 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol - 1]->GetColor() == 'W')
+            {
+                delete mqpaaBoard[m.iEndRow][m.iEndCol - 1];
+                mqpaaBoard[m.iEndRow][m.iEndCol - 1] = nullptr;
+                return true;
+            }
+            else if (m.iEndCol + 1 <= 7 && mqpaaBoard[m.iEndRow][m.iEndCol + 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol + 1]->GetColor() == 'W')
+            {
+                delete mqpaaBoard[m.iEndRow][m.iEndCol + 1];
+                mqpaaBoard[m.iEndRow][m.iEndCol + 1] = nullptr;
+                return true;
+            }
+        }
+        return false;
     }
 
     bool CheckPromotion(Move m)
@@ -302,6 +355,7 @@ public:
                 mqpaaBoard[m.iEndRow][m.iEndCol] = new P_Queen(type);
         }
     }
+
 };
 
 #endif //CONSOLE_CHESS_BOARD_H

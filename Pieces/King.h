@@ -2,11 +2,10 @@
 //  Author: Broderick Westrope
 //  Date: 20/04/21
 //
+#include "Piece.h"
 
 #ifndef CONSOLE_CHESS_KING_H
 #define CONSOLE_CHESS_KING_H
-
-#include "Piece.h"
 
 class P_King : public Piece
 {
@@ -16,7 +15,7 @@ private:
         return 'K';
     }
 
-    bool AreSquaresLegal(Move m, Board *board)
+    bool AreSquaresLegal(Move m, Piece *qpaaBoard[8][8])
     {
         int iRowDelta = m.iEndRow - m.iStartRow;
         int iColDelta = m.iEndCol - m.iStartCol;
@@ -25,9 +24,7 @@ private:
         {
             return true;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-        else if (CanCastleThisKing(*board))
+        else if (CanCastleThisKing(qpaaBoard))
         {
             printf("CAN CASTLE!\n");
             if (((iRowDelta >= -2) && (iRowDelta <= 2)) && iColDelta == 0)
@@ -38,12 +35,8 @@ private:
         return false;
     }
 
-    bool CanCastleThisKing(Board board)
+    bool CanCastleThisKing(Piece *qpaaBoard[8][8])
     {
-        if (board.IsInCheck(GetColor()))
-            return false;
-
-        Piece *qpaaBoard[8][8] = board.mqpaaBoard;
         if (canCastle)
         {
             printf("L1\n");
@@ -74,10 +67,6 @@ private:
                 std::cout << "FATAL ERROR: Can't Castle the king because the king's color is not recognised." << std::endl;
         }
         printf("CANNOT CASTLE!\n");
-=======
->>>>>>> parent of 17e1082 (En Passant)
-=======
->>>>>>> parent of 17e1082 (En Passant)
         return false;
     }
 
@@ -87,6 +76,8 @@ public:
 
     ~P_King()
     {}
+
+    bool canCastle = true;
 };
 
 

@@ -43,7 +43,7 @@ bool HumanPlayer::GetMove(Board &board)
             if ((qpCurrPiece != nullptr) && (qpCurrPiece->GetColor() == type))
             {
                 // Check that the destination is a valid destination
-                if (qpCurrPiece->IsLegalMove(m, Board()))
+                if (qpCurrPiece->IsLegalMove(m, board.mqpaaBoard))
                 {
                     system("CLS");
                     board.DoTheMove(m, type);
@@ -51,9 +51,12 @@ bool HumanPlayer::GetMove(Board &board)
                 }
             }
         }
+        system("CLS");
+        cout << "Invalid Input!" << endl;
+        board.Print();
     } while (true);
 
-    return true;
+    return false;
 }
 
 #endif //CONSOLE_CHESS_HUMANPLAYER_H

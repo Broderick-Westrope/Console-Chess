@@ -2,11 +2,11 @@
 //  Author: Broderick Westrope
 //  Date: 20/04/21
 //
+#include "Piece.h"
 
 #ifndef CONSOLE_CHESS_PAWN_H
 #define CONSOLE_CHESS_PAWN_H
 
-#include "Piece.h"
 
 class P_Pawn : public Piece
 {
@@ -16,9 +16,9 @@ private:
         return 'P';
     }
 
-    bool AreSquaresLegal(Move m, Board *board)
+    bool AreSquaresLegal(Move m, Piece *qpaaBoard[8][8])
     {
-        Piece *qpEnd = board[m.iEndRow][m.iEndCol];
+        Piece *qpEnd = qpaaBoard[m.iEndRow][m.iEndCol];
         if (qpEnd == 0) //If Endination is unnocupied
         {
             if (m.iStartCol == m.iEndCol) //If src and dest are in the same column (ie we arent going across)

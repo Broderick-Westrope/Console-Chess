@@ -2,11 +2,10 @@
 //  Author: Broderick Westrope
 //  Date: 20/04/21
 //
+#include "Piece.h"
 
 #ifndef CONSOLE_CHESS_BISHOP_H
 #define CONSOLE_CHESS_BISHOP_H
-
-#include "Piece.h"
 
 class P_Bishop : public Piece
 {
@@ -16,7 +15,7 @@ private:
         return 'B';
     }
 
-    bool AreSquaresLegal(Move m, Board *board)
+    bool AreSquaresLegal(Move m, Piece *qpaaBoard[8][8])
     {
         if ((m.iEndCol - m.iStartCol == m.iEndRow - m.iStartRow) || (m.iEndCol - m.iStartCol == m.iStartRow - m.iEndRow))
         {
@@ -29,7 +28,7 @@ private:
                  iCheckRow != m.iEndRow;
                  iCheckRow = iCheckRow + iRowOffset, iCheckCol = iCheckCol + iColOffset)
             {
-                if (board[iCheckRow][iCheckCol] != 0)
+                if (qpaaBoard[iCheckRow][iCheckCol] != 0)
                 {
                     return false;
                 }

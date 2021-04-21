@@ -24,7 +24,11 @@ private:
             for (int iCheckCol = m.iStartCol + iColOffset; iCheckCol != m.iEndCol; iCheckCol = iCheckCol + iColOffset)
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 if (board->mqpaaBoard[m.iStartRow][iCheckCol] != nullptr)
+=======
+                if (qpaaBoard[m.iStartRow][iCheckCol] != 0)
+>>>>>>> parent of 17e1082 (En Passant)
 =======
                 if (qpaaBoard[m.iStartRow][iCheckCol] != 0)
 >>>>>>> parent of 17e1082 (En Passant)
@@ -41,7 +45,11 @@ private:
             for (int iCheckRow = m.iStartRow + iRowOffset; iCheckRow != m.iEndRow; iCheckRow = iCheckRow + iRowOffset)
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 if (board->mqpaaBoard[iCheckRow][m.iStartCol] != nullptr)
+=======
+                if (qpaaBoard[iCheckRow][m.iStartCol] != 0)
+>>>>>>> parent of 17e1082 (En Passant)
 =======
                 if (qpaaBoard[iCheckRow][m.iStartCol] != 0)
 >>>>>>> parent of 17e1082 (En Passant)

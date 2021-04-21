@@ -25,6 +25,7 @@ private:
         {
             return true;
         }
+<<<<<<< HEAD
         else if (CanCastleThisKing(*board))
         {
             printf("CAN CASTLE!\n");
@@ -72,6 +73,8 @@ private:
                 std::cout << "FATAL ERROR: Can't Castle the king because the king's color is not recognised." << std::endl;
         }
         printf("CANNOT CASTLE!\n");
+=======
+>>>>>>> parent of 17e1082 (En Passant)
         return false;
     }
 
@@ -81,8 +84,6 @@ public:
 
     ~P_King()
     {}
-
-    bool canCastle = true;
 };
 
 

@@ -51,12 +51,9 @@ bool HumanPlayer::GetMove(Board &board)
                 }
             }
         }
-        system("CLS");
-        cout << "Invalid Input!" << endl;
-        board.Print();
     } while (true);
 
-    return false;
+    return true;
 }
 
 #endif //CONSOLE_CHESS_HUMANPLAYER_H

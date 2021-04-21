@@ -23,7 +23,11 @@ private:
             int iColOffset = (m.iEndCol - m.iStartCol > 0) ? 1 : -1;
             for (int iCheckCol = m.iStartCol + iColOffset; iCheckCol != m.iEndCol; iCheckCol = iCheckCol + iColOffset)
             {
+<<<<<<< HEAD
                 if (board->mqpaaBoard[m.iStartRow][iCheckCol] != nullptr)
+=======
+                if (qpaaBoard[m.iStartRow][iCheckCol] != 0)
+>>>>>>> parent of 17e1082 (En Passant)
                 {
                     return false;
                 }
@@ -36,7 +40,11 @@ private:
             int iRowOffset = (m.iEndRow - m.iStartRow > 0) ? 1 : -1;
             for (int iCheckRow = m.iStartRow + iRowOffset; iCheckRow != m.iEndRow; iCheckRow = iCheckRow + iRowOffset)
             {
+<<<<<<< HEAD
                 if (board->mqpaaBoard[iCheckRow][m.iStartCol] != nullptr)
+=======
+                if (qpaaBoard[iCheckRow][m.iStartCol] != 0)
+>>>>>>> parent of 17e1082 (En Passant)
                 {
                     return false;
                 }
@@ -52,8 +60,6 @@ public:
 
     ~P_Rook()
     {}
-
-    bool canCastle = true;
 };
 
 

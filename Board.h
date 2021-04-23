@@ -47,12 +47,12 @@ public:
 
     ~Board()
     {
-        for (auto &iRow : grid)
+        for (auto &row : grid)
         {
-            for (auto &iCol : iRow)
+            for (auto &col : row)
             {
-                delete iCol;
-                iCol = nullptr;
+                delete col;
+                col = nullptr;
             }
         }
     }
@@ -376,6 +376,7 @@ public:
 
 //        UpdateCastlingBools(m);
 
+        system("CLS");
         return notCheck;
     }
 

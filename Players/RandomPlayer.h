@@ -24,22 +24,17 @@ bool RandomPlayer::GetMove(Board &board)
     vector<Move> moves;
     for (int pR = 0; pR < 8; pR++) //All rows of Pieces
     {
-        printf("L1\n");
-        for (int pC = 0; pC < 8; pC++) //All cols of Pieces
+        for (int pC = 0; pC < 8; pC++) //All columns of Pieces
         {
-            printf("L2\n");
-            if (board.grid[pR][pC] != nullptr)
+            if (board.grid[pR][pC] != nullptr && board.grid[pR][pC]->GetColor() == type)
             {
-                printf("L3\n");
                 for (int mR = 0; mR < 8; mR++)
                 {
-                    printf("L4\n");
                     for (int mC = 0; mC < 8; mC++)
                     {
-                        if ((pR == mR && pC == mC) || (board.grid[mR][mC]->GetColor() == type))// || (board.grid[pR][pC]->GetPiece() != 'P'))
+                        if ((pR == mR && pC == mC) || (board.grid[mR][mC] != nullptr && board.grid[mR][mC]->GetColor() == type))
                             continue;
 
-                        printf("L5\n");
                         Move m(pR, pC, mR, mC);
                         if (board.grid[pR][pC]->IsLegalMove(m, board.grid))
                             moves.push_back(m);
@@ -50,20 +45,18 @@ bool RandomPlayer::GetMove(Board &board)
     }
 
     if (moves.empty())
-        cout << "ERROR: No candidate moves were found by Random Player!" << endl;
-
-    do
     {
-        int randomIndex = rand() % (moves.size() - 1);
-        cout << "Picked random index " << randomIndex << endl;
-        Move randMove = moves[randomIndex];
-        if (board.DoTheMove(randMove, type))
-            return true;
+        cout << "ERROR: No candidate moves were found by Random Player!" << endl;
+        return false;
+    }
+    
+    int randomIndex = rand() % (moves.size() - 1);
+    Move randMove = moves[randomIndex];
+    if (board.DoTheMove(randMove, type))
+        return true;
 
-        system("CLS");
-        cout << "Invalid Input!" << endl;
-        board.Print();
-    } while (true);
+    cout << "Invalid Input!" << endl;
+    board.Print();
 
     return false;
 }

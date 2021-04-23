@@ -5,6 +5,8 @@
 #ifndef CONSOLE_CHESS_BOARD_H
 #define CONSOLE_CHESS_BOARD_H
 
+#include "vector"
+
 class Board
 {
 public:
@@ -259,36 +261,36 @@ public:
     bool IsInCheck(char type)
     {
         // Find the king
-        int iKingRow;
-        int iKingCol;
-        for (int iRow = 0; iRow < 8; ++iRow)
+        int kingRow;
+        int kingCol;
+        for (int row = 0; row < 8; ++row)
         {
-            for (int iCol = 0; iCol < 8; ++iCol)
+            for (int col = 0; col < 8; ++col)
             {
-                if (grid[iRow][iCol] != nullptr)
+                if (grid[row][col] != nullptr)
                 {
-                    if (grid[iRow][iCol]->GetColor() == type)
+                    if (grid[row][col]->GetColor() == type)
                     {
-                        if (grid[iRow][iCol]->GetPiece() == 'K')
+                        if (grid[row][col]->GetPiece() == 'K')
                         {
-                            iKingRow = iRow;
-                            iKingCol = iCol;
+                            kingRow = row;
+                            kingCol = col;
                         }
                     }
                 }
             }
         }
         // Run through the opponent's pieces and see if any can take the king
-        for (int iRow = 0; iRow < 8; ++iRow)
+        for (int row = 0; row < 8; ++row)
         {
-            for (int iCol = 0; iCol < 8; ++iCol)
+            for (int col = 0; col < 8; ++col)
             {
-                if (grid[iRow][iCol] != nullptr)
+                if (grid[row][col] != nullptr)
                 {
-                    if (grid[iRow][iCol]->GetColor() != type)
+                    if (grid[row][col]->GetColor() != type)
                     {
-                        Move m(iRow, iCol, iKingRow, iKingCol);
-                        if (grid[iRow][iCol]->IsLegalMove(m, grid))
+                        Move m(row, col, kingRow, kingCol);
+                        if (grid[row][col]->IsLegalMove(m, grid))
                         {
                             return true;
                         }
@@ -380,6 +382,23 @@ public:
         return notCheck;
     }
 
+    bool DoTest(Move m, char type)
+    {
+        // Make the move
+        grid[m.iEndRow][m.iEndCol] = grid[m.iStartRow][m.iStartCol];
+        grid[m.iStartRow][m.iStartCol] = nullptr;
+
+        //Check for pawn promotion
+        if (CheckPromotion(m))
+            PawnPromotion(m, type);
+        else if (EnPassant(m, type))
+            std::cout << "You did an En Passant move. Well Done!" << std::endl;
+
+//        UpdateCastlingBools(m);
+
+        return true;
+    }
+
 //    void UpdateCastlingBools(Move m)
 //    {
 //        if (grid[m.iEndRow][m.iEndCol]->GetPiece() == 'R')
@@ -469,6 +488,106 @@ public:
         }
     }
 
+    bool HasWonGame(char player)
+    {
+        // Check that the current player can move
+        // If not, we have a stalemate or checkmate
+        bool bCanMove(false);
+        bCanMove = CanMove(player);
+        if (!bCanMove)
+        {
+            std::cout << "IN" << std::endl;
+            if (IsInCheck(player))
+            {
+//                AlternateTurn();
+                std::cout << "Checkmate, " << player << " Wins!" << std::endl;
+            }
+            else
+            {
+                std::cout << "Stalemate!" << std::endl;
+            }
+        }
+        std::cout << "Win Check Complete" << std::endl;
+        return !bCanMove;
+        //return false;
+    }
+
+    char Evaluation()
+    {
+        if (HasWonGame('W'))
+            return 'W';
+        if (HasWonGame('B'))
+            return 'B';
+        return ' ';
+    }
+
+    std::vector<Move> GetPossibleMoves(char player)
+    {
+        using namespace std;
+
+        vector<Move> moves;
+
+        for (int pR = 0; pR < 8; pR++) //All rows of Pieces
+        {
+            for (int pC = 0; pC < 8; pC++) //All columns of Pieces
+            {
+                if (grid[pR][pC] != nullptr && grid[pR][pC]->GetColor() == player)
+                {
+                    for (int mR = 0; mR < 8; mR++)
+                    {
+                        for (int mC = 0; mC < 8; mC++)
+                        {
+                            if ((pR == mR && pC == mC) || (grid[mR][mC] != nullptr && grid[mR][mC]->GetColor() == player))
+                                continue;
+
+                            Move m(pR, pC, mR, mC);
+                            if (grid[pR][pC]->IsLegalMove(m, grid))
+                                moves.push_back(m);
+                        }
+                    }
+                }
+            }
+        }
+
+        return moves;
+    }
+
+    void SayMove(Move m)
+    {
+        using namespace std;
+
+        char color = grid[m.iEndRow][m.iEndCol]->GetColor();
+        if (color == 'W')
+            cout << "White";
+        else
+            cout << "Black";
+
+        cout << " moved their ";
+
+        switch (grid[m.iEndRow][m.iEndCol]->GetPiece())
+        {
+            case 'P':
+                cout << "pawn";
+                break;
+            case 'R':
+                cout << "rook";
+                break;
+            case 'N':
+                cout << "knight";
+                break;
+            case 'B':
+                cout << "bishop";
+                break;
+            case 'K':
+                cout << "king";
+                break;
+            case 'Q':
+                cout << "queen";
+                break;
+        }
+
+        cout << " from tile " << m.iStartRow + 1 << m.iStartCol + 1 << " to tile " << m.iEndRow + 1 << m.iEndCol + 1 << "." << endl;
+    }
 };
 
 #endif //CONSOLE_CHESS_BOARD_H

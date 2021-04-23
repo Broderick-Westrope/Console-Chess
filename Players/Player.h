@@ -9,13 +9,13 @@ using namespace std;
 class Player
 {
 protected:
-    char type;
+    char player;
     string name;
     string symbol;
 public:
-    Player(char t, string n) : type(t), name(n)
+    Player(char t, string n) : player(t), name(n)
     {
-        switch (type)
+        switch (player)
         {
             case 'W':
                 name = "White";
@@ -38,7 +38,7 @@ public:
 
     int GetType()
     {
-        return type;
+        return player;
     }
 
     virtual bool GetMove(Board &bBoard) = 0;

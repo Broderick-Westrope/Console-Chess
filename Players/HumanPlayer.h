@@ -43,13 +43,14 @@ bool HumanPlayer::GetMove(Board &board)
 
             // Additional checks in here
             // Check that the piece is the correct color
-            if ((qpCurrPiece != nullptr) && (qpCurrPiece->GetColor() == type))
+            if ((qpCurrPiece != nullptr) && (qpCurrPiece->GetColor() == player))
             {
                 // Check that the destination is a valid destination
                 if (qpCurrPiece->IsLegalMove(m, board.grid))
                 {
                     system("CLS");
-                    board.DoTheMove(m, type);
+                    board.DoTheMove(m, player);
+                    board.SayMove(m);
                     return true;
                 }
             }

@@ -7,5 +7,6 @@
 
 #include "Players/HumanPlayer.h"
 #include "Players/RandomPlayer.h"
+#include "Players/MonteCarloPlayer.h"
 
 #endif //CONSOLE_CHESS_PLAYERS_I_H

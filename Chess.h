@@ -44,8 +44,12 @@ public:
 
             board.Print();
 
-            if (IsGameOver(turn))
+            if (board.HasWonGame(turn))
+            {
+                printf("Winner\n");
+                AlternateTurn();
                 won = turn;
+            }
 
             AlternateTurn();
         } while (won == ' ');
@@ -61,27 +65,6 @@ public:
     void AlternateTurn()
     {
         turn = (turn == 'W') ? 'B' : 'W';
-    }
-
-    bool IsGameOver(char player)
-    {
-        // Check that the current player can move
-        // If not, we have a stalemate or checkmate
-        bool bCanMove(false);
-        bCanMove = board.CanMove(player);
-        if (!bCanMove)
-        {
-            if (board.IsInCheck(player))
-            {
-                AlternateTurn();
-                std::cout << "Checkmate, " << player << " Wins!" << std::endl;
-            }
-            else
-            {
-                std::cout << "Stalemate!" << std::endl;
-            }
-        }
-        return !bCanMove;
     }
 };
 

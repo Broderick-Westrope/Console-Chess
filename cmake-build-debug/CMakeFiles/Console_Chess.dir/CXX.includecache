@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
+vector
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/vector
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Chess.h
 
@@ -60,6 +62,14 @@ C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/HumanPlayer.h
 Player.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/Player.h
 
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/MonteCarloPlayer.h
+vector
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/vector
+queue
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/queue
+Player.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/Player.h
+
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/Player.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/RandomPlayer.h
@@ -73,6 +83,8 @@ Players/HumanPlayer.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/HumanPlayer.h
 Players/RandomPlayer.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/RandomPlayer.h
+Players/MonteCarloPlayer.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/MonteCarloPlayer.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/main.cpp
 iostream

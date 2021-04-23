@@ -13,6 +13,7 @@ CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Pieces/Queen.h
 CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Pieces/Rook.h
 CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Pieces_I.h
 CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Players/HumanPlayer.h
+CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Players/MonteCarloPlayer.h
 CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Players/Player.h
 CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Players/RandomPlayer.h
 CMakeFiles/Console_Chess.dir/main.cpp.obj: ../Players_I.h

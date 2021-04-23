@@ -26,13 +26,13 @@ bool RandomPlayer::GetMove(Board &board)
     {
         for (int pC = 0; pC < 8; pC++) //All columns of Pieces
         {
-            if (board.grid[pR][pC] != nullptr && board.grid[pR][pC]->GetColor() == type)
+            if (board.grid[pR][pC] != nullptr && board.grid[pR][pC]->GetColor() == player)
             {
                 for (int mR = 0; mR < 8; mR++)
                 {
                     for (int mC = 0; mC < 8; mC++)
                     {
-                        if ((pR == mR && pC == mC) || (board.grid[mR][mC] != nullptr && board.grid[mR][mC]->GetColor() == type))
+                        if ((pR == mR && pC == mC) || (board.grid[mR][mC] != nullptr && board.grid[mR][mC]->GetColor() == player))
                             continue;
 
                         Move m(pR, pC, mR, mC);
@@ -49,11 +49,14 @@ bool RandomPlayer::GetMove(Board &board)
         cout << "ERROR: No candidate moves were found by Random Player!" << endl;
         return false;
     }
-    
+
     int randomIndex = rand() % (moves.size() - 1);
     Move randMove = moves[randomIndex];
-    if (board.DoTheMove(randMove, type))
+    if (board.DoTheMove(randMove, player))
+    {
+        board.SayMove(randMove);
         return true;
+    }
 
     cout << "Invalid Input!" << endl;
     board.Print();

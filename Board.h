@@ -62,166 +62,197 @@ public:
     void Print()
     {
         using namespace std;
-        cout << endl;
+
         const int tileWidth = 6;
         const int tileHeight = 3;
-        //Top Numbers
-        // Print the bottom border with numbers
+
+        cout << endl; //Add our empty line above the board for error messages
+
+        //region - Top Numbers
+        //Loop through the variable tileHeight for each row of the margin/border. We add one so that the top can be closed
+        //using an underscore without interfering with the spacing inside the margin
         for (int row = 0; row < tileHeight + 1; ++row)
         {
-            if (row % tileHeight == 2)
+            if (row % tileHeight == 2)  //If we are on the third row (second within the margin) --this is the row where our numbers are placed
             {
-                if (row != 0)
-                    cout << "   |     ";
-                for (int col = 0; col < 8 * tileWidth; ++col)
+                if (row != 0) //If its not the first row (the row of only underscores)
+                    cout << "   |     "; //Add the left edge
+                for (int col = 0; col < 8 * tileWidth; ++col) //For each tile (+1) * the number of digits in a tile. Basically loop through each digit in our board's width
                 {
                     int tileCol = col / tileWidth;
-                    if (col % tileWidth == 1)
+                    if (col % tileWidth == 1) //If we are on column of index 1 (relative to the tile width)
                     {
-                        cout << "0";
+                        cout << "0"; //Print a 0. This gives us the aligned look because all of our numbers (1-8) are 1 digit and hence of odd length
                     }
-                    else if ((col % tileWidth) == 2)
+                    else if (col % tileWidth == 2) //Else if we are on the column index of 2
                     {
-                        cout << (tileCol + 1);
+                        cout << (tileCol + 1); //Print the index of this column (+1 for the user ease)
                     }
-                    else if (col % tileWidth == 0 || col % tileWidth == 3)
+                    else if (col % tileWidth == 0 || col % tileWidth == 3) //Else if we are on the column of index 0 or 3 (either before or after our 2 digit number) then add those fancy ~ things
                     {
                         cout << '~';
                     }
-                    else
+                    else //Else we just want blank space to fill it in
                     {
                         cout << ' ';
                     }
                 }
-                cout << "   ";
+                for (int i = 0; i < tileWidth / 2; i++) //Use a for loop to determine how many spaces are needed. This allows us to customise the board easily and keep things relative
+                    cout << ' '; //Add spaces to align the right edge
             }
-            else
+            else //Else if we are on any other row
             {
-                if (row == 0)
+                if (row == 0) //If we are on row 0 add blank space only
                     cout << "    ";
-                else
+                else //If not, add blank space and align the left edge
                     cout << "   |";
-                for (int col = 1; col < 9 * tileWidth; ++col)
+
+                for (int col = 1; col < 9 * tileWidth; ++col) //For all of the digits in our relative board width
                 {
-                    if (row == 0)
+                    //If its row 0 then we only want to add underscored, OR if the row is the last row and the column is beyond the left margin (the tile height)
+                    if (row == 0 || (row == tileHeight && col > tileHeight))
                         cout << '_';
-                    else
+                    else //If not, add spaces to fill in
                         cout << ' ';
                 }
-                if (row == 0)
-                    cout << "___";
-                else
-                    cout << "   ";
+
+                for (int i = 0; i < tileWidth / 2; i++)
+                {
+                    if (row == 0) //If the row is index 0 then finish it with some underscores
+                        cout << '_';
+                    else //If not, finish it with some blank space
+                        cout << ' ';
+                }
             }
 
-            if (row != 0)
+            if (row != 0) //If its any row other than 0, add the right edge
                 cout << "|";
             cout << endl;
         }
-        //Middle
+        //endregion
+
+        //region - Middle
+        //For each digit in our relative board width (+1)
         for (int row = 0; row < 8 * tileHeight; ++row)
         {
             int tileRow = row / tileHeight;
-            // Print side border with numbering
-            if (row % 3 == 1)
+            //region - Left Margin
+            if (row % tileHeight == 1)  //If the row is index 1
             {
-                cout << "   |~" << (char) ('1' + 7 - tileRow) << "~|";
+                cout << "   |~" << (char) ('1' + 7 - tileRow) << "~|"; //Print the number inside the margin
             }
-            else
+            else //Else, print an empty margin row
             {
                 cout << "   |   |";
             }
-            // Print the chess board
-            for (int col = 0; col < 8 * tileWidth; ++col)
+            //endregion
+
+            //region - Print Board Tiles
+            for (int col = 0; col < 8 * tileWidth; ++col) //For all of the digits in the board width
             {
                 int tileCol = col / tileWidth;
-                if (((row % tileHeight) == 1) && ((col % tileWidth) == 1 || (col % tileWidth) == 2 || (col % tileWidth) == 3 || (col % tileWidth) == 4) &&
-                    grid[7 - tileRow][tileCol] != nullptr)
+
+                //If this tile isn't taken, it's row 1 within the tile (the middle row), and the column is between 1 and 4 (we only customize the middle 4, and this is only done when there is a piece)
+                if (grid[7 - tileRow][tileCol] != nullptr && (row % tileHeight) == 1 && ((col % tileWidth) >= 1 && (col % tileWidth) <= 4))
                 {
-                    if ((col % tileWidth) == 2)
+                    if ((col % tileWidth) == 2) //If it's column 2
                     {
-                        cout << grid[7 - tileRow][tileCol]->GetColor();
+                        cout << grid[7 - tileRow][tileCol]->GetColor(); //Print the color value
                     }
-                    else if ((col % tileWidth) == 3)
+                    else if ((col % tileWidth) == 3) //If it's column 3
                     {
-                        cout << grid[7 - tileRow][tileCol]->GetPiece();
+                        cout << grid[7 - tileRow][tileCol]->GetPiece(); //Print the piece value
                     }
-                    else
+                    else //Else we want to print the left or right outline of the piece (this is just for aesthetics)
                     {
                         cout << '|';
                     }
                 }
-                else
+                else //If not
                 {
-                    if ((tileRow + tileCol) % 2 == 1)
+                    if ((tileRow + tileCol) % 2 == 1) //If it's a while tile (Even)
                     {
-                        cout << '@';
+                        cout << '@'; //Use a symbol to make it white
                     }
-                    else
+                    else //If not, it's a black tile (odd)
                     {
-                        cout << ' ';
+                        if (row == (tileHeight * 8) - 1) //If its the final/bottom row of tiles
+                            cout << '_'; //Use underscores to make it black but add and edge effect
+                        else
+                            cout << ' '; //Use spaces to make it black
                     }
                 }
             }
-            //RHS Numbers
-            if (row % 3 == 1)
+            //endregion
+
+            //region - Right Margin
+            if (row % 3 == 1) //If its the middle row (aligns with the middle of the tile)
             {
-                cout << "|~" << (char) ('1' + 7 - tileRow) << "~|";
+                cout << "|~" << (char) ('1' + 7 - tileRow) << "~|"; //Print the value with the margin edges
             }
-            else
+            else //If not, just print margin edges
             {
                 cout << "|   |";
             }
+            //endregion
 
             cout << endl;
         }
-        // Print the bottom border with numbers
+        //endregion
+
+        //region - Bottom Numbers
+        //Loop through the variable tileHeight for each row of the margin/border.
         for (int row = 0; row < tileHeight; ++row)
         {
-            if (row % tileHeight == 1)
+            if (row % tileHeight == 1) //If its row of index 1
             {
-                cout << "   |     ";
-                for (int col = 0; col < 8 * tileWidth; ++col)
+                cout << "   |     "; //Add the left edge
+                for (int col = 0; col < 8 * tileWidth; ++col) //For each digit of the board's width
                 {
                     int tileCol = col / tileWidth;
-                    if (col % tileWidth == 1)
+                    if (col % tileWidth == 1)  //If we are on column of index 1 (relative to the tile width)
                     {
-                        cout << "0";
+                        cout << "0"; //Print a 0. This gives us the aligned look because all of our numbers (1-8) are 1 digit and hence of odd length
                     }
-                    else if ((col % tileWidth) == 2)
+                    else if ((col % tileWidth) == 2) //Else if we are on the column index of 2
                     {
-                        cout << (tileCol + 1);
+                        cout << (tileCol + 1); //Print the index of this column (+1 for the user ease)
                     }
-                    else if (col % tileWidth == 0 || col % tileWidth == 3)
+                    else if (col % tileWidth == 0 || col % tileWidth == 3) //Else if we are on the column of index 0 or 3 (either before or after our 2 digit number) then add those fancy ~ things
                     {
                         cout << '~';
                     }
-                    else
+                    else //Else we just want blank space to fill it in
                     {
                         cout << ' ';
                     }
                 }
-                cout << "   ";
+                for (int i = 0; i < tileWidth / 2; i++) //Use a for loop to determine how many spaces are needed. This allows us to customise the board easliy and keep things relative
+                    cout << " "; //Add spaces to align the right edge
             }
-            else
+            else //If it's not the row of index 1
             {
-                cout << "   |";
-                for (int col = 1; col < 9 * tileWidth; ++col)
+                cout << "   |"; //Print the right edge
+                for (int col = 1; col < 9 * tileWidth; ++col) //For each digit in the board's width
                 {
-                    if (row == tileHeight - 1)
-                        cout << '_';
-                    else
+                    if (row % tileHeight == tileHeight - 1) //If we are on the last row (last iteration of the row for loop)
+                        cout << '_'; //Print an underscore for the bottom edge of the board
+                    else //If not, print blank space
                         cout << ' ';
                 }
-                if (row == tileHeight - 1)
-                    cout << "___";
-                else
-                    cout << "   ";
+
+                for (int i = 0; i < tileWidth / 2; i++) //Use a for loop to determine how many spaces or underscores are needed. This allows us to customise the board easliy and keep things relative
+                    if (row % tileHeight == tileHeight - 1) //If we are on the last row (last iteration of the row for loop) print an underscore
+                        cout << '_';
+                    else //If not, print blank space
+                        cout << ' ';
             }
 
-            cout << "|";
+            cout << "|"; //Add the edge at the end of the row
             cout << endl;
         }
+        //endregion
+
         cout << endl;
     }
 

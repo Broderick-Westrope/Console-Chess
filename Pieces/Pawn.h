@@ -19,7 +19,7 @@ private:
     bool AreSquaresLegal(Move m, Piece *qpaaBoard[8][8])
     {
         Piece *qpEnd = qpaaBoard[m.iEndRow][m.iEndCol];
-        if (qpEnd == 0) //If Endination is unnocupied
+        if (qpEnd == nullptr) //If Endination is unnocupied
         {
             if (m.iStartCol == m.iEndCol) //If src and dest are in the same column (ie we arent going across)
             {

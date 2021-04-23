@@ -7,8 +7,6 @@
 #IncludeRegexTransform: 
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
-Pieces_I.h
-C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces_I.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Chess.h
 
@@ -31,8 +29,6 @@ Piece.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Piece.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Piece.h
-../Board.h
-C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/Queen.h
 Piece.h
@@ -61,26 +57,36 @@ Pieces/King.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces/King.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/HumanPlayer.h
+Player.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/Player.h
 
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/Player.h
+
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/RandomPlayer.h
+vector
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/vector
+Player.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/Player.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players_I.h
-Players/Player.h
-C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/Player.h
 Players/HumanPlayer.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/HumanPlayer.h
+Players/RandomPlayer.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players/RandomPlayer.h
 
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/main.cpp
 iostream
 -
 Move.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Move.h
-Board.h
-C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
 Pieces_I.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Pieces_I.h
+Board.h
+C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Board.h
 Players_I.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Players_I.h
 Chess.h
 C:/Users/ascle/Desktop/UNI/EXTRA/Console-Chess/Chess.h
+ctime
+-
 

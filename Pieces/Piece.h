@@ -29,7 +29,7 @@ public:
     bool IsLegalMove(Move m, Piece *qpaaBoard[8][8])
     {
         Piece *qpDest = qpaaBoard[m.iEndRow][m.iEndCol];
-        if ((qpDest == 0) || (mcColor != qpDest->GetColor()))
+        if ((qpDest == nullptr) || (mcColor != qpDest->GetColor()))
         {
             return AreSquaresLegal(m, qpaaBoard);
         }

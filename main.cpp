@@ -9,11 +9,14 @@
 #include "Board.h"
 #include "Players_I.h"
 #include "Chess.h"
+#include <ctime>
 
 int main()
 {
+    srand(time(nullptr));
+
     Player *white = new HumanPlayer('W', "Human");
-    Player *black = new HumanPlayer('B', "Human");
+    Player *black = new RandomPlayer('B', "Random");
 
     Chess thisGame(white, black);
     thisGame.Play();

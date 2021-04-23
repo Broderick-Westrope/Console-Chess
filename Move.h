@@ -5,7 +5,7 @@
 #ifndef CONSOLE_CHESS_MOVE_H
 #define CONSOLE_CHESS_MOVE_H
 
-class Move
+struct Move
 {
 public:
     int iStartRow;

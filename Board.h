@@ -14,40 +14,40 @@ public:
         {
             for (int iCol = 0; iCol < 8; ++iCol)
             {
-                mqpaaBoard[iRow][iCol] = nullptr;
+                grid[iRow][iCol] = nullptr;
             }
         }
         // Allocate and place black pieces
         for (int iCol = 0; iCol < 8; ++iCol)
         {
-            mqpaaBoard[6][iCol] = new P_Pawn('B');
+            grid[6][iCol] = new P_Pawn('B');
         }
-        mqpaaBoard[7][0] = new P_Rook('B');
-        mqpaaBoard[7][1] = new P_Knight('B');
-        mqpaaBoard[7][2] = new P_Bishop('B');
-        mqpaaBoard[7][3] = new P_King('B');
-        mqpaaBoard[7][4] = new P_Queen('B');
-        mqpaaBoard[7][5] = new P_Bishop('B');
-        mqpaaBoard[7][6] = new P_Knight('B');
-        mqpaaBoard[7][7] = new P_Rook('B');
+        grid[7][0] = new P_Rook('B');
+        grid[7][1] = new P_Knight('B');
+        grid[7][2] = new P_Bishop('B');
+        grid[7][3] = new P_King('B');
+        grid[7][4] = new P_Queen('B');
+        grid[7][5] = new P_Bishop('B');
+        grid[7][6] = new P_Knight('B');
+        grid[7][7] = new P_Rook('B');
         // Allocate and place white pieces
         for (int iCol = 0; iCol < 8; ++iCol)
         {
-            mqpaaBoard[1][iCol] = new P_Pawn('W');
+            grid[1][iCol] = new P_Pawn('W');
         }
-        mqpaaBoard[0][0] = new P_Rook('W');
-        mqpaaBoard[0][1] = new P_Knight('W');
-        mqpaaBoard[0][2] = new P_Bishop('W');
-        mqpaaBoard[0][3] = new P_King('W');
-        mqpaaBoard[0][4] = new P_Queen('W');
-        mqpaaBoard[0][5] = new P_Bishop('W');
-        mqpaaBoard[0][6] = new P_Knight('W');
-        mqpaaBoard[0][7] = new P_Rook('W');
+        grid[0][0] = new P_Rook('W');
+        grid[0][1] = new P_Knight('W');
+        grid[0][2] = new P_Bishop('W');
+        grid[0][3] = new P_King('W');
+        grid[0][4] = new P_Queen('W');
+        grid[0][5] = new P_Bishop('W');
+        grid[0][6] = new P_Knight('W');
+        grid[0][7] = new P_Rook('W');
     }
 
     ~Board()
     {
-        for (auto &iRow : mqpaaBoard)
+        for (auto &iRow : grid)
         {
             for (auto &iCol : iRow)
             {
@@ -57,38 +57,94 @@ public:
         }
     }
 
+    Piece *grid[8][8];
+
     void Print()
     {
         using namespace std;
         cout << endl;
-        const int kiSquareWidth = 6;
-        const int kiSquareHeight = 3;
-        for (int iRow = 0; iRow < 8 * kiSquareHeight; ++iRow)
+        const int tileWidth = 6;
+        const int tileHeight = 3;
+        //Top Numbers
+        // Print the bottom border with numbers
+        for (int row = 0; row < tileHeight + 1; ++row)
         {
-            int iSquareRow = iRow / kiSquareHeight;
-            // Print side border with numbering
-            if (iRow % 3 == 1)
+            if (row % tileHeight == 2)
             {
-                cout << "   -" << (char) ('1' + 7 - iSquareRow) << '-';
+                if (row != 0)
+                    cout << "   |     ";
+                for (int col = 0; col < 8 * tileWidth; ++col)
+                {
+                    int tileCol = col / tileWidth;
+                    if (col % tileWidth == 1)
+                    {
+                        cout << "0";
+                    }
+                    else if ((col % tileWidth) == 2)
+                    {
+                        cout << (tileCol + 1);
+                    }
+                    else if (col % tileWidth == 0 || col % tileWidth == 3)
+                    {
+                        cout << '~';
+                    }
+                    else
+                    {
+                        cout << ' ';
+                    }
+                }
+                cout << "   ";
             }
             else
             {
-                cout << "   ---";
+                if (row == 0)
+                    cout << "    ";
+                else
+                    cout << "   |";
+                for (int col = 1; col < 9 * tileWidth; ++col)
+                {
+                    if (row == 0)
+                        cout << '_';
+                    else
+                        cout << ' ';
+                }
+                if (row == 0)
+                    cout << "___";
+                else
+                    cout << "   ";
+            }
+
+            if (row != 0)
+                cout << "|";
+            cout << endl;
+        }
+        //Middle
+        for (int row = 0; row < 8 * tileHeight; ++row)
+        {
+            int tileRow = row / tileHeight;
+            // Print side border with numbering
+            if (row % 3 == 1)
+            {
+                cout << "   |~" << (char) ('1' + 7 - tileRow) << "~|";
+            }
+            else
+            {
+                cout << "   |   |";
             }
             // Print the chess board
-            for (int iCol = 0; iCol < 8 * kiSquareWidth; ++iCol)
+            for (int col = 0; col < 8 * tileWidth; ++col)
             {
-                int iSquareCol = iCol / kiSquareWidth;
-                if (((iRow % kiSquareHeight) == 1) && ((iCol % kiSquareWidth) == 1 || (iCol % kiSquareWidth) == 2 || (iCol % kiSquareWidth) == 3 || (iCol % kiSquareWidth) == 4) &&
-                    mqpaaBoard[7 - iSquareRow][iSquareCol] != nullptr)
+                int tileCol = col / tileWidth;
+                if (((row % tileHeight) == 1) && ((col % tileWidth) == 1 || (col % tileWidth) == 2 || (col % tileWidth) == 3 || (col % tileWidth) == 4) &&
+                    grid[7 - tileRow][tileCol] != nullptr)
                 {
-                    if ((iCol % kiSquareWidth) == 2)
+                    if ((col % tileWidth) == 2)
                     {
-                        cout << mqpaaBoard[7 - iSquareRow][iSquareCol]->GetColor();
+                        cout << grid[7 - tileRow][tileCol]->GetColor();
                     }
-                    else if ((iCol % kiSquareWidth) == 3)
+                    else if ((col % tileWidth) == 3)
                     {
-                        cout << mqpaaBoard[7 - iSquareRow][iSquareCol]->GetPiece();
+                        cout << grid[7 - tileRow][tileCol]->GetPiece();
                     }
                     else
                     {
@@ -97,9 +153,9 @@ public:
                 }
                 else
                 {
-                    if ((iSquareRow + iSquareCol) % 2 == 1)
+                    if ((tileRow + tileCol) % 2 == 1)
                     {
-                        cout << '*';
+                        cout << '@';
                     }
                     else
                     {
@@ -107,37 +163,64 @@ public:
                     }
                 }
             }
-            cout << endl;
-        }
-        // Print the bottom border with numbers
-        for (int iRow = 0; iRow < kiSquareHeight; ++iRow)
-        {
-            if (iRow % kiSquareHeight == 1)
+            //RHS Numbers
+            if (row % 3 == 1)
             {
-                cout << "   -----";
-                for (int iCol = 0; iCol < 8 * kiSquareWidth; ++iCol)
-                {
-                    int iSquareCol = iCol / kiSquareWidth;
-                    if ((iCol % kiSquareWidth) == 1)
-                    {
-                        cout << (iSquareCol + 1);
-                    }
-                    else
-                    {
-                        cout << '-';
-                    }
-                }
-                cout << endl;
+                cout << "|~" << (char) ('1' + 7 - tileRow) << "~|";
             }
             else
             {
-                cout << "   ";
-                for (int iCol = 1; iCol < 9 * kiSquareWidth; ++iCol)
-                {
-                    cout << '-';
-                }
-                cout << endl;
+                cout << "|   |";
             }
+
+            cout << endl;
+        }
+        // Print the bottom border with numbers
+        for (int row = 0; row < tileHeight; ++row)
+        {
+            if (row % tileHeight == 1)
+            {
+                cout << "   |     ";
+                for (int col = 0; col < 8 * tileWidth; ++col)
+                {
+                    int tileCol = col / tileWidth;
+                    if (col % tileWidth == 1)
+                    {
+                        cout << "0";
+                    }
+                    else if ((col % tileWidth) == 2)
+                    {
+                        cout << (tileCol + 1);
+                    }
+                    else if (col % tileWidth == 0 || col % tileWidth == 3)
+                    {
+                        cout << '~';
+                    }
+                    else
+                    {
+                        cout << ' ';
+                    }
+                }
+                cout << "   ";
+            }
+            else
+            {
+                cout << "   |";
+                for (int col = 1; col < 9 * tileWidth; ++col)
+                {
+                    if (row == tileHeight - 1)
+                        cout << '_';
+                    else
+                        cout << ' ';
+                }
+                if (row == tileHeight - 1)
+                    cout << "___";
+                else
+                    cout << "   ";
+            }
+
+            cout << "|";
+            cout << endl;
         }
         cout << endl;
     }
@@ -151,11 +234,11 @@ public:
         {
             for (int iCol = 0; iCol < 8; ++iCol)
             {
-                if (mqpaaBoard[iRow][iCol] != nullptr)
+                if (grid[iRow][iCol] != nullptr)
                 {
-                    if (mqpaaBoard[iRow][iCol]->GetColor() == type)
+                    if (grid[iRow][iCol]->GetColor() == type)
                     {
-                        if (mqpaaBoard[iRow][iCol]->GetPiece() == 'K')
+                        if (grid[iRow][iCol]->GetPiece() == 'K')
                         {
                             iKingRow = iRow;
                             iKingCol = iCol;
@@ -169,12 +252,12 @@ public:
         {
             for (int iCol = 0; iCol < 8; ++iCol)
             {
-                if (mqpaaBoard[iRow][iCol] != nullptr)
+                if (grid[iRow][iCol] != nullptr)
                 {
-                    if (mqpaaBoard[iRow][iCol]->GetColor() != type)
+                    if (grid[iRow][iCol]->GetColor() != type)
                     {
                         Move m(iRow, iCol, iKingRow, iKingCol);
-                        if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, mqpaaBoard))
+                        if (grid[iRow][iCol]->IsLegalMove(m, grid))
                         {
                             return true;
                         }
@@ -201,26 +284,26 @@ public:
         {
             for (int iCol = 0; iCol < 8; ++iCol)
             {
-                if (mqpaaBoard[iRow][iCol] != nullptr)
+                if (grid[iRow][iCol] != nullptr)
                 {
                     // If it is a piece of the current player, see if it has a legal move
-                    if (mqpaaBoard[iRow][iCol]->GetColor() == cColor)
+                    if (grid[iRow][iCol]->GetColor() == cColor)
                     {
                         for (int iMoveRow = 0; iMoveRow < 8; ++iMoveRow)
                         {
                             for (int iMoveCol = 0; iMoveCol < 8; ++iMoveCol)
                             {
                                 Move m(iRow, iCol, iMoveRow, iMoveCol);
-                                if (mqpaaBoard[iRow][iCol]->IsLegalMove(m, mqpaaBoard))
+                                if (grid[iRow][iCol]->IsLegalMove(m, grid))
                                 {
                                     // Make move and check whether king is in check
-                                    Piece *qpTemp = mqpaaBoard[iMoveRow][iMoveCol];
-                                    mqpaaBoard[iMoveRow][iMoveCol] = mqpaaBoard[iRow][iCol];
-                                    mqpaaBoard[iRow][iCol] = nullptr;
+                                    Piece *qpTemp = grid[iMoveRow][iMoveCol];
+                                    grid[iMoveRow][iMoveCol] = grid[iRow][iCol];
+                                    grid[iRow][iCol] = nullptr;
                                     bool bCanMove = !IsInCheck(cColor);
                                     // Undo the move
-                                    mqpaaBoard[iRow][iCol] = mqpaaBoard[iMoveRow][iMoveCol];
-                                    mqpaaBoard[iMoveRow][iMoveCol] = qpTemp;
+                                    grid[iRow][iCol] = grid[iMoveRow][iMoveCol];
+                                    grid[iMoveRow][iMoveCol] = qpTemp;
                                     if (bCanMove)
                                     {
                                         return true;
@@ -235,15 +318,13 @@ public:
         return false;
     }
 
-    Piece *mqpaaBoard[8][8];
-
-    bool DoTheMove(Move m, int type)
+    bool DoTheMove(Move m, char type)
     {
         bool notCheck = false;
         // Make the move
-        Piece *qpTemp = mqpaaBoard[m.iEndRow][m.iEndCol];
-        mqpaaBoard[m.iEndRow][m.iEndCol] = mqpaaBoard[m.iStartRow][m.iStartCol];
-        mqpaaBoard[m.iStartRow][m.iStartCol] = nullptr;
+        Piece *qpTemp = grid[m.iEndRow][m.iEndCol];
+        grid[m.iEndRow][m.iEndCol] = grid[m.iStartRow][m.iStartCol];
+        grid[m.iStartRow][m.iStartCol] = nullptr;
         // Make sure that the current player is not in check
         if (!IsInCheck(type))
         {
@@ -252,8 +333,8 @@ public:
         }
         else
         { // Undo the last move
-            mqpaaBoard[m.iStartRow][m.iStartCol] = mqpaaBoard[m.iEndRow][m.iEndCol];
-            mqpaaBoard[m.iEndRow][m.iEndCol] = qpTemp;
+            grid[m.iStartRow][m.iStartCol] = grid[m.iEndRow][m.iEndCol];
+            grid[m.iEndRow][m.iEndCol] = qpTemp;
         }
 
         //Check for pawn promotion
@@ -262,54 +343,54 @@ public:
         else if (EnPassant(m, type))
             std::cout << "You did an En Passant move. Well Done!" << std::endl;
 
-        UpdateCastlingBools(m);
+//        UpdateCastlingBools(m);
 
         return notCheck;
     }
 
-    void UpdateCastlingBools(Move m)
-    {
-        if (mqpaaBoard[m.iEndRow][m.iEndCol]->GetPiece() == 'R')
-        {
-            std::cout << "Rook at " << m.iEndRow << m.iEndCol << " can no longer castle" << std::endl;
-            static_cast<P_Rook *>(mqpaaBoard[m.iEndRow][m.iEndCol])->canCastle = false;
-        }
-        else if (mqpaaBoard[m.iEndRow][m.iEndCol]->GetPiece() == 'K')
-        {
-            std::cout << "King at " << m.iEndRow << m.iEndCol << " can no longer castle" << std::endl;
-            static_cast<P_King *>(mqpaaBoard[m.iEndRow][m.iEndCol])->canCastle = false;
-        }
-    }
+//    void UpdateCastlingBools(Move m)
+//    {
+//        if (grid[m.iEndRow][m.iEndCol]->GetPiece() == 'R')
+//        {
+//            std::cout << "Rook at " << m.iEndRow << m.iEndCol << " can no longer castle" << std::endl;
+//            static_cast<P_Rook *>(grid[m.iEndRow][m.iEndCol])->canCastle = false;
+//        }
+//        else if (grid[m.iEndRow][m.iEndCol]->GetPiece() == 'K')
+//        {
+//            std::cout << "King at " << m.iEndRow << m.iEndCol << " can no longer castle" << std::endl;
+//            static_cast<P_King *>(grid[m.iEndRow][m.iEndCol])->canCastle = false;
+//        }
+//    }
 
     bool EnPassant(Move m, char type)
     {
         if ((type == 'W' && m.iEndRow == m.iStartRow + 2))
         {
-            if (m.iEndCol - 1 >= 0 && mqpaaBoard[m.iEndRow][m.iEndCol - 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol - 1]->GetColor() == 'B')
+            if (m.iEndCol - 1 >= 0 && grid[m.iEndRow][m.iEndCol - 1] != nullptr && grid[m.iEndRow][m.iEndCol - 1]->GetColor() == 'B')
             {
-                delete mqpaaBoard[m.iEndRow][m.iEndCol - 1];
-                mqpaaBoard[m.iEndRow][m.iEndCol - 1] = nullptr;
+                delete grid[m.iEndRow][m.iEndCol - 1];
+                grid[m.iEndRow][m.iEndCol - 1] = nullptr;
                 return true;
             }
-            else if (m.iEndCol + 1 <= 7 && mqpaaBoard[m.iEndRow][m.iEndCol + 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol + 1]->GetColor() == 'B')
+            else if (m.iEndCol + 1 <= 7 && grid[m.iEndRow][m.iEndCol + 1] != nullptr && grid[m.iEndRow][m.iEndCol + 1]->GetColor() == 'B')
             {
-                delete mqpaaBoard[m.iEndRow][m.iEndCol + 1];
-                mqpaaBoard[m.iEndRow][m.iEndCol + 1] = nullptr;
+                delete grid[m.iEndRow][m.iEndCol + 1];
+                grid[m.iEndRow][m.iEndCol + 1] = nullptr;
                 return true;
             }
         }
         else if (type == 'B' && m.iEndRow == m.iStartRow - 2)
         {
-            if (m.iEndCol - 1 >= 0 && mqpaaBoard[m.iEndRow][m.iEndCol - 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol - 1]->GetColor() == 'W')
+            if (m.iEndCol - 1 >= 0 && grid[m.iEndRow][m.iEndCol - 1] != nullptr && grid[m.iEndRow][m.iEndCol - 1]->GetColor() == 'W')
             {
-                delete mqpaaBoard[m.iEndRow][m.iEndCol - 1];
-                mqpaaBoard[m.iEndRow][m.iEndCol - 1] = nullptr;
+                delete grid[m.iEndRow][m.iEndCol - 1];
+                grid[m.iEndRow][m.iEndCol - 1] = nullptr;
                 return true;
             }
-            else if (m.iEndCol + 1 <= 7 && mqpaaBoard[m.iEndRow][m.iEndCol + 1] != nullptr && mqpaaBoard[m.iEndRow][m.iEndCol + 1]->GetColor() == 'W')
+            else if (m.iEndCol + 1 <= 7 && grid[m.iEndRow][m.iEndCol + 1] != nullptr && grid[m.iEndRow][m.iEndCol + 1]->GetColor() == 'W')
             {
-                delete mqpaaBoard[m.iEndRow][m.iEndCol + 1];
-                mqpaaBoard[m.iEndRow][m.iEndCol + 1] = nullptr;
+                delete grid[m.iEndRow][m.iEndCol + 1];
+                grid[m.iEndRow][m.iEndCol + 1] = nullptr;
                 return true;
             }
         }
@@ -318,7 +399,7 @@ public:
 
     bool CheckPromotion(Move m)
     {
-        Piece *p = mqpaaBoard[m.iEndRow][m.iEndCol];
+        Piece *p = grid[m.iEndRow][m.iEndCol];
         if (p->GetColor() == 'W' && m.iEndRow == 7)
             return true;
         if (p->GetColor() == 'B' && m.iEndRow == 0)
@@ -334,25 +415,25 @@ public:
         char piece;
         cin >> piece;
 
-        delete mqpaaBoard[m.iEndRow][m.iEndCol];
+        delete grid[m.iEndRow][m.iEndCol];
 
         switch (piece)
         {
             case 'B':
-                mqpaaBoard[m.iEndRow][m.iEndCol] = new P_Bishop(type);
+                grid[m.iEndRow][m.iEndCol] = new P_Bishop(type);
                 break;
             case 'N':
-                mqpaaBoard[m.iEndRow][m.iEndCol] = new P_Knight(type);
+                grid[m.iEndRow][m.iEndCol] = new P_Knight(type);
                 break;
             case 'R':
-                mqpaaBoard[m.iEndRow][m.iEndCol] = new P_Rook(type);
+                grid[m.iEndRow][m.iEndCol] = new P_Rook(type);
                 break;
             case 'Q':
-                mqpaaBoard[m.iEndRow][m.iEndCol] = new P_Queen(type);
+                grid[m.iEndRow][m.iEndCol] = new P_Queen(type);
                 break;
             default:
                 cout << "Invalid input so I'll make it a Queen for you." << endl;
-                mqpaaBoard[m.iEndRow][m.iEndCol] = new P_Queen(type);
+                grid[m.iEndRow][m.iEndCol] = new P_Queen(type);
         }
     }
 

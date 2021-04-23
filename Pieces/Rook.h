@@ -52,7 +52,7 @@ public:
     ~P_Rook()
     {}
 
-    bool canCastle = true;
+    //bool canCastle = true;
 };
 
 

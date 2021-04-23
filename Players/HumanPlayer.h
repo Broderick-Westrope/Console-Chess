@@ -5,6 +5,8 @@
 #ifndef CONSOLE_CHESS_HUMANPLAYER_H
 #define CONSOLE_CHESS_HUMANPLAYER_H
 
+#include "Player.h"
+
 class HumanPlayer : public Player
 {
 public:
@@ -37,13 +39,14 @@ bool HumanPlayer::GetMove(Board &board)
         // Check that the indices are in range and that the source and destination are different
         if (Board::IsInBounds(m) && !(iStartRow == iEndRow && iStartCol == iEndCol))
         {
+            Piece *qpCurrPiece = board.grid[iStartRow][iStartCol];
+
             // Additional checks in here
-            Piece *qpCurrPiece = board.mqpaaBoard[iStartRow][iStartCol];
             // Check that the piece is the correct color
             if ((qpCurrPiece != nullptr) && (qpCurrPiece->GetColor() == type))
             {
                 // Check that the destination is a valid destination
-                if (qpCurrPiece->IsLegalMove(m, board.mqpaaBoard))
+                if (qpCurrPiece->IsLegalMove(m, board.grid))
                 {
                     system("CLS");
                     board.DoTheMove(m, type);
